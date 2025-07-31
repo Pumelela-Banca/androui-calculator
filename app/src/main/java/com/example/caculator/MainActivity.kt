@@ -11,6 +11,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var result: EditText
     private var firstNumber: String? = null
+    private var secondNumber: String? = null
 
     // hold values for type of operators
     private var operand1: Double? = null
@@ -52,8 +53,15 @@ class MainActivity : ComponentActivity() {
 
         val listener = View.OnClickListener { v ->
             val b = v as Button
+            if (b.text == "0" && firstNumber != null)
+            {
+                firstNumber += b.text.toString()
+                result.setText(
+                    firstNumber
+                )
+            }
 
-            firstNumber += b.text
+
         }
 
         button0.setOnClickListener(listener)
