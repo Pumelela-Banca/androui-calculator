@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+
 
 
 class MainActivity : ComponentActivity() {
@@ -53,7 +55,11 @@ class MainActivity : ComponentActivity() {
 
         val listener = View.OnClickListener { v ->
             val b = v as Button
-            if (b.text == "0" && firstNumber != null)
+            if (b.text == "0" && firstNumber == null)
+            {
+                Toast.makeText(this,"Number has two leading zeros", Toast.LENGTH_LONG).show()
+
+            } else
             {
                 firstNumber += b.text.toString()
                 result.setText(
