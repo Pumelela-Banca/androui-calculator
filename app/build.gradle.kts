@@ -1,3 +1,5 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -10,8 +12,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.caculator"
-        minSdk = 28
-        targetSdk = 34
+        minSdk = 27
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -19,7 +21,7 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -40,7 +42,10 @@ android {
 }
 
 dependencies {
-
+    implementation ("androidx.appcompat:appcompat:1.4.1")
+    implementation ("com.google.android.material:material:1.4.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
+    implementation("androidx.lifecycle:lifecycle-common:2.6.2")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -49,7 +54,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.constraintlayout)
+    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
+    implementation("androidx.cardview:cardview:1.0.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
