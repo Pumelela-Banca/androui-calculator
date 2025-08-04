@@ -15,10 +15,9 @@ class MainActivity : ComponentActivity() {
     private var firstNumber: String? = null
     private var secondNumber: String? = null
 
-    // hold values for type of operators
-    private var operand1: Double? = null
-    private var operand2: Double = 0.0
-    private var pendingOperation = "#"
+    // operations
+    private var operation: String? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,10 +54,16 @@ class MainActivity : ComponentActivity() {
 
         val listener = View.OnClickListener { v ->
             val b = v as Button
+
             if (b.text == "0" && firstNumber == null)
             {
-                Toast.makeText(this,"Number has two leading zeros", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,"Number has two leading zeros", Toast.LENGTH_LONG).show()
 
+            } else if (firstNumber!!.contains(".") && b.text.toString() == ".")
+            {
+                Toast.makeText(
+                    this,"Too many dots", Toast.LENGTH_LONG).show()
             } else
             {
                 firstNumber += b.text.toString()
@@ -66,8 +71,6 @@ class MainActivity : ComponentActivity() {
                     firstNumber
                 )
             }
-
-
         }
 
         button0.setOnClickListener(listener)
@@ -81,6 +84,37 @@ class MainActivity : ComponentActivity() {
         button8.setOnClickListener(listener)
         button9.setOnClickListener(listener)
         buttonDot.setOnClickListener(listener)
+
+        // Handle operations
+        val opListiner = View.OnClickListener { v->
+            val op = (v as Button).text.toString()
+
+            val operationsList = listOf<String>("+", "-", "*", "/", "%")
+            if (firstNumber == null)
+            {
+                Toast.makeText(this,
+                    "Start number then $op", Toast.LENGTH_LONG).show()
+            } else if (secondNumber != null)
+            {
+                // Equates answer and populates text with answer (- ,+ ,% ,* )
+                TODO("This will go straight to answer and ")
+
+            } else if (operationsList.contains(op))
+            {
+
+            } else
+            {
+                val secondDisplay = "$firstNumber $op"
+                result.setText(
+                    secondDisplay
+                )
+            }
+        }
+
+        buttonPlus.setOnClickListener(opListiner)
+        buttonMinus.setOnClickListener(opListiner)
+        buttonMultiply.setOnClickListener(opListiner)
+        buttonDivide.setOnClickListener(opListiner)
 
 
 
