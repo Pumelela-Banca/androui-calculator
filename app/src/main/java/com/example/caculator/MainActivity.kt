@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
         // get the display value
         result = findViewById(R.id.display)
         firstNumber = ""
+        secondNumber = ""
 
         // Get all the buttons
         val button0: Button = findViewById(R.id.btn_0)
@@ -54,6 +55,7 @@ class MainActivity : ComponentActivity() {
 
         val listener = View.OnClickListener { v ->
             val b = v as Button
+            val operationsList = listOf<String>("+", "-", "*", "/", "%")
 
             if (b.text == "0" && firstNumber == null)
             {
@@ -64,7 +66,15 @@ class MainActivity : ComponentActivity() {
             {
                 Toast.makeText(
                     this,"Too many dots", Toast.LENGTH_LONG).show()
-            } else
+            } else if (result.text.contains(Regex("[+\\-*/%]")))
+            {
+                secondNumber += b.text.toString()
+                val  secondDisplay = "$firstNumber $operation $secondNumber"
+                result.setText(
+                    secondDisplay
+                )
+            }
+            else
             {
                 firstNumber += b.text.toString()
                 result.setText(
@@ -101,10 +111,15 @@ class MainActivity : ComponentActivity() {
 
             } else if (operationsList.contains(op))
             {
-
+                val secondDisplay = "$firstNumber $op"
+                operation = op
+                result.setText(
+                    secondDisplay
+                )
             } else
             {
                 val secondDisplay = "$firstNumber $op"
+                operation = op
                 result.setText(
                     secondDisplay
                 )
@@ -115,9 +130,11 @@ class MainActivity : ComponentActivity() {
         buttonMinus.setOnClickListener(opListiner)
         buttonMultiply.setOnClickListener(opListiner)
         buttonDivide.setOnClickListener(opListiner)
+        buttonPercent.setOnClickListener(opListiner)
+    }
 
-
-
-
+    fun performOperation (value1: String, value2: String, operand: String )
+    {
+        
     }
 }
