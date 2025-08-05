@@ -107,7 +107,7 @@ class MainActivity : ComponentActivity() {
             } else if (secondNumber != null)
             {
                 // Equates answer and populates text with answer (- ,+ ,% ,* )
-                TODO("This will go straight to answer and ")
+                performOperation(firstNumber!!, secondNumber!!, operation!!)
 
             } else if (operationsList.contains(op))
             {
@@ -135,6 +135,31 @@ class MainActivity : ComponentActivity() {
 
     fun performOperation (value1: String, value2: String, operand: String )
     {
-        
+        if (value1.toIntOrNull() == null || value2.toIntOrNull() == null)
+        {
+            val num1 = value1.toFloat()
+            val num2 = value2.toFloat()
+            val answers = when (operand) {
+                "+" -> num1 + num2
+                "-" -> num1 - num2
+                "*" -> num1 * num2
+                "/" -> num1 / num2
+                else -> num1
+            }
+            val newNum = answers.toString()
+            result.setText(newNum)
+
+        } else {
+            val num1 = value1.toInt()
+            val num2 = value2.toInt()
+            val answers = when (operand) {
+                "+" -> num1 + num2
+                "-" -> num1 - num2
+                "*" -> num1 * num2
+                "/" -> num1 / num2
+                else -> num1
+            }
+            result.setText(answers)
+        }
     }
 }
