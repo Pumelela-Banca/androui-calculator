@@ -55,18 +55,14 @@ class MainActivity : ComponentActivity() {
 
         val listener = View.OnClickListener { v ->
             val b = v as Button
-            val operationsList = listOf<String>("+", "-", "*", "/", "%")
+            //val operationsList = listOf<String>("+", "-", "*", "/", "%")
 
             if (b.text == "0" && firstNumber == null)
             {
                 Toast.makeText(
                     this,"Number has two leading zeros", Toast.LENGTH_LONG).show()
 
-            } else if (firstNumber!!.contains(".") && b.text.toString() == ".")
-            {
-                Toast.makeText(
-                    this,"Too many dots", Toast.LENGTH_LONG).show()
-            } else if (result.text.contains(Regex("[+\\-*/%]")))
+            }  else if (result.text.contains(Regex("[+\\-*/%]")))
             {
                 secondNumber += b.text.toString()
                 val  secondDisplay = "$firstNumber $operation $secondNumber"
@@ -93,18 +89,38 @@ class MainActivity : ComponentActivity() {
         button7.setOnClickListener(listener)
         button8.setOnClickListener(listener)
         button9.setOnClickListener(listener)
-        buttonDot.setOnClickListener(listener)
+        buttonDot.setOnClickListener {
+            if (!firstNumber!!.contains(".") && secondNumber == "" )
+            {
+                firstNumber += "."
+                result.setText(
+                    firstNumber
+                )
+            } else if (!secondNumber!!.contains("."))
+            {
+                secondNumber += "."
+                val  secondDisplay = "$firstNumber $operation $secondNumber"
+                result.setText(
+                    secondDisplay
+                )
+            }
+        }
+
+        // Handle equal operation
+        buttonEqual.setOnClickListener {
+            performOperation(firstNumber!!, secondNumber!!, operation!!)
+        }
 
         // Handle operations
         val opListiner = View.OnClickListener { v->
             val op = (v as Button).text.toString()
 
             val operationsList = listOf<String>("+", "-", "*", "/", "%")
-            if (firstNumber == null)
+            if (firstNumber == "")
             {
                 Toast.makeText(this,
                     "Start number then $op", Toast.LENGTH_LONG).show()
-            } else if (secondNumber != null)
+            } else if (secondNumber != "")
             {
                 // Equates answer and populates text with answer (- ,+ ,% ,* )
                 performOperation(firstNumber!!, secondNumber!!, operation!!)
@@ -131,14 +147,34 @@ class MainActivity : ComponentActivity() {
         buttonMultiply.setOnClickListener(opListiner)
         buttonDivide.setOnClickListener(opListiner)
         buttonPercent.setOnClickListener(opListiner)
+
+        // Clear screen
+        buttonClearAll.setOnClickListener {
+            secondNumber = ""
+            firstNumber = ""
+            operation = ""
+            result.setText("0")
+        }
+
+        // delete last item
+        buttonClear.setOnClickListener {
+            // TODO: delete last item on screen
+        }
     }
 
-    fun performOperation (value1: String, value2: String, operand: String )
+
+
+    private fun performOperation (value1: String?, value2: String?, operand: String? )
     {
-        if (value1.toIntOrNull() == null || value2.toIntOrNull() == null)
+        if (value2 == "0" && operand == "/") {
+            val errorCode = "Do not divide by Zero"
+            result.setText(errorCode)
+        }
+        
+        if (value1!!.toIntOrNull() == null || value2!!.toIntOrNull() == null)
         {
             val num1 = value1.toFloat()
-            val num2 = value2.toFloat()
+            val num2 = value2!!.toFloat()
             val answers = when (operand) {
                 "+" -> num1 + num2
                 "-" -> num1 - num2
@@ -148,6 +184,9 @@ class MainActivity : ComponentActivity() {
             }
             val newNum = answers.toString()
             result.setText(newNum)
+            secondNumber = ""
+            firstNumber = answers.toString()
+            operation = ""
 
         } else {
             val num1 = value1.toInt()
@@ -160,6 +199,9 @@ class MainActivity : ComponentActivity() {
                 else -> num1
             }
             result.setText(answers)
+            secondNumber = ""
+            firstNumber = answers.toString()
+            operation = ""
         }
     }
 }
