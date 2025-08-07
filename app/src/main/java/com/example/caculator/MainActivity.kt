@@ -1,6 +1,7 @@
 package com.example.caculator
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -57,7 +58,7 @@ class MainActivity : ComponentActivity() {
             val b = v as Button
             //val operationsList = listOf<String>("+", "-", "*", "/", "%")
 
-            if (b.text == "0" && firstNumber == null)
+            if (b.text == "0" && firstNumber == "")
             {
                 Toast.makeText(
                     this,"Number has two leading zeros", Toast.LENGTH_LONG).show()
@@ -96,7 +97,8 @@ class MainActivity : ComponentActivity() {
                 result.setText(
                     firstNumber
                 )
-            } else if (!secondNumber!!.contains("."))
+            } else if (!secondNumber!!.contains(".") && firstNumber != ""
+                && operation != "")
             {
                 secondNumber += "."
                 val  secondDisplay = "$firstNumber $operation $secondNumber"
@@ -108,7 +110,8 @@ class MainActivity : ComponentActivity() {
 
         // Handle equal operation
         buttonEqual.setOnClickListener {
-            performOperation(firstNumber!!, secondNumber!!, operation!!)
+            if (firstNumber != "" && secondNumber != "" && operation != "")
+                performOperation(firstNumber!!, secondNumber!!, operation!!)
         }
 
         // Handle operations
@@ -166,12 +169,12 @@ class MainActivity : ComponentActivity() {
 
     private fun performOperation (value1: String?, value2: String?, operand: String? )
     {
-        if (value2 == "0" && operand == "/") {
-            val errorCode = "Do not divide by Zero"
-            result.setText(errorCode)
+        Log.d("Tag", "Inside operation function")
+        if (value2 == "0" && operand == "/")
+        {
+            Toast.makeText(this, "Zero division Error", Toast.LENGTH_LONG).show()
         }
-        
-        if (value1!!.toIntOrNull() == null || value2!!.toIntOrNull() == null)
+        else if (value1!!.toIntOrNull() == null || value2!!.toIntOrNull() == null)
         {
             val num1 = value1.toFloat()
             val num2 = value2!!.toFloat()
@@ -185,10 +188,10 @@ class MainActivity : ComponentActivity() {
             val newNum = answers.toString()
             result.setText(newNum)
             secondNumber = ""
-            firstNumber = answers.toString()
+            firstNumber = ""
             operation = ""
 
-        } else {
+        } else if (value1.toIntOrNull() != null && value2.toIntOrNull() != null) {
             val num1 = value1.toInt()
             val num2 = value2.toInt()
             val answers = when (operand) {
@@ -198,9 +201,10 @@ class MainActivity : ComponentActivity() {
                 "/" -> num1 / num2
                 else -> num1
             }
-            result.setText(answers)
+            val newNum = answers.toString()
+            result.setText(newNum)
             secondNumber = ""
-            firstNumber = answers.toString()
+            firstNumber = ""
             operation = ""
         }
     }
