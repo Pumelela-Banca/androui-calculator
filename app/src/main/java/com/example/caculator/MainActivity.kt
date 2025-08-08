@@ -129,16 +129,6 @@ class MainActivity : ComponentActivity() {
             {
                 // Equates answer and populates text with answer (- ,+ ,% ,* )
                 performOperation(firstNumber!!, secondNumber!!, operation!!)
-
-            } else if (operationsList.contains(op) && secondNumber == "")
-            {
-                val secondDisplay = "$firstNumber $op"
-                operation = op
-                result.setText(
-                    secondDisplay
-                )
-            } else if (prevAnswer != "" && secondNumber == "" && firstNumber == "")
-            {
                 firstNumber = prevAnswer
                 operation = op
                 val secondDisplay = "$firstNumber $op"
@@ -146,6 +136,13 @@ class MainActivity : ComponentActivity() {
                     secondDisplay
                 )
                 prevAnswer = ""
+            } else if (operationsList.contains(op) && secondNumber == "")
+            {
+                val secondDisplay = "$firstNumber $op"
+                operation = op
+                result.setText(
+                    secondDisplay
+                )
             } else
             {
                 val secondDisplay = "$firstNumber $op"
