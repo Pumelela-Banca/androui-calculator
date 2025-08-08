@@ -125,18 +125,27 @@ class MainActivity : ComponentActivity() {
             {
                 Toast.makeText(this,
                     "Start number then $op", Toast.LENGTH_LONG).show()
-            } else if (secondNumber != "")
+            } else if (secondNumber != "" && prevAnswer == "")
             {
                 // Equates answer and populates text with answer (- ,+ ,% ,* )
                 performOperation(firstNumber!!, secondNumber!!, operation!!)
 
-            } else if (operationsList.contains(op))
+            } else if (operationsList.contains(op) && secondNumber == "")
             {
                 val secondDisplay = "$firstNumber $op"
                 operation = op
                 result.setText(
                     secondDisplay
                 )
+            } else if (prevAnswer != "" && secondNumber == "" && firstNumber == "")
+            {
+                firstNumber = prevAnswer
+                operation = op
+                val secondDisplay = "$firstNumber $op"
+                result.setText(
+                    secondDisplay
+                )
+                prevAnswer = ""
             } else
             {
                 val secondDisplay = "$firstNumber $op"
