@@ -15,6 +15,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var result: EditText
     private var firstNumber: String? = null
     private var secondNumber: String? = null
+    private var prevAnswer: String? = null
 
     // operations
     private var operation: String? = null
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
         result = findViewById(R.id.display)
         firstNumber = ""
         secondNumber = ""
+        prevAnswer = ""
 
         // Get all the buttons
         val button0: Button = findViewById(R.id.btn_0)
@@ -119,7 +121,7 @@ class MainActivity : ComponentActivity() {
             val op = (v as Button).text.toString()
 
             val operationsList = listOf<String>("+", "-", "*", "/", "%")
-            if (firstNumber == "")
+            if (firstNumber == "" && prevAnswer != "")
             {
                 Toast.makeText(this,
                     "Start number then $op", Toast.LENGTH_LONG).show()
@@ -156,6 +158,7 @@ class MainActivity : ComponentActivity() {
             secondNumber = ""
             firstNumber = ""
             operation = ""
+            prevAnswer = ""
             result.setText("0")
         }
 
@@ -189,7 +192,7 @@ class MainActivity : ComponentActivity() {
             result.setText(newNum)
             secondNumber = ""
             firstNumber = ""
-            operation = ""
+            prevAnswer = newNum
 
         } else if (value1.toIntOrNull() != null && value2.toIntOrNull() != null) {
             val num1 = value1.toInt()
@@ -206,6 +209,7 @@ class MainActivity : ComponentActivity() {
             secondNumber = ""
             firstNumber = ""
             operation = ""
+            prevAnswer = newNum
         }
     }
 }
