@@ -8,6 +8,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 
+private const val STATE_RESULT = "result"
+private  const val  STATE_FIRST_NUMBER = "firstNumber"
+private const val  STATE_SECOND_NUMBER =  "secondNumber"
+private const val STATE_OPERATION = "operation"
 
 
 class MainActivity : ComponentActivity() {
@@ -28,9 +32,21 @@ class MainActivity : ComponentActivity() {
 
         // get the display value
         result = findViewById(R.id.display)
-        firstNumber = ""
-        secondNumber = ""
-        prevAnswer = ""
+        if (savedInstanceState != null)
+        {
+            firstNumber = savedInstanceState.getString(
+                STATE_FIRST_NUMBER, "")
+            secondNumber = savedInstanceState.getString(STATE_SECOND_NUMBER,
+                "")
+            prevAnswer = savedInstanceState.getString(STATE_OPERATION,
+                "")
+        } else
+        {
+            firstNumber = ""
+            secondNumber = ""
+            prevAnswer = ""
+        }
+
 
         // Get all the buttons
         val button0: Button = findViewById(R.id.btn_0)
@@ -217,5 +233,19 @@ class MainActivity : ComponentActivity() {
             operation = ""
             prevAnswer = newNum
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (firstNumber != null)
+        {
+            outState.putString(STATE_FIRST_NUMBER, firstNumber)
+        }
+        if (operation != null)
+            outState.putString(STATE_OPERATION, operation)
+        if (secondNumber != null)
+            outState.putString(STATE_SECOND_NUMBER, secondNumber)
+        if (prevAnswer != null)
+            outState.putString(STATE_RESULT, prevAnswer)
     }
 }
