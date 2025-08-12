@@ -136,7 +136,7 @@ class MainActivity : ComponentActivity() {
             val op = (v as Button).text.toString()
 
             val operationsList = listOf<String>("+", "-", "*", "/", "%")
-            if (firstNumber == "" && prevAnswer != "")
+            if (firstNumber == "" && prevAnswer == "")
             {
                 Toast.makeText(this,
                     "Start number then $op", Toast.LENGTH_LONG).show()
