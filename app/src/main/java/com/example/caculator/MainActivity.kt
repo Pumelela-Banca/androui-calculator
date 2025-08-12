@@ -88,8 +88,7 @@ class MainActivity : ComponentActivity() {
                 result.setText(
                     secondDisplay
                 )
-            }
-            else
+            } else
             {
                 firstNumber += b.text.toString()
                 result.setText(
@@ -159,7 +158,17 @@ class MainActivity : ComponentActivity() {
                 result.setText(
                     secondDisplay
                 )
-            } else
+            } else if (prevAnswer != "" && firstNumber == "" && secondNumber == "")
+            {
+                firstNumber = prevAnswer
+                prevAnswer = ""
+                operation = op
+                val  secondDisplay = "$firstNumber $operation"
+                result.setText(
+                    secondDisplay
+                )
+            }
+            else
             {
                 val secondDisplay = "$firstNumber $op"
                 operation = op
