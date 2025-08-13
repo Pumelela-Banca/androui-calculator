@@ -209,7 +209,7 @@ class MainActivity : ComponentActivity() {
                 result.setText(firstNumber)
             } else if (secondNumber != "") {
                 secondNumber = secondNumber?.dropLast(1)
-                val remainingNumbers = "$firstNumber $operation"
+                val remainingNumbers = "$firstNumber $operation $secondNumber"
                 result.setText(remainingNumbers)
             }
         }
