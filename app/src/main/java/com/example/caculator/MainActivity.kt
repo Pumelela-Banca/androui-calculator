@@ -151,7 +151,7 @@ class MainActivity : ComponentActivity() {
                     secondDisplay
                 )
                 prevAnswer = ""
-            } else if (operationsList.contains(op) && secondNumber == "")
+            } else if (operationsList.contains(op) && secondNumber == "" && prevAnswer == "")
             {
                 val secondDisplay = "$firstNumber $op"
                 operation = op
@@ -161,12 +161,13 @@ class MainActivity : ComponentActivity() {
             } else if (prevAnswer != "" && firstNumber == "" && secondNumber == "")
             {
                 firstNumber = prevAnswer
-                prevAnswer = ""
+
                 operation = op
                 val  secondDisplay = "$firstNumber $operation"
                 result.setText(
                     secondDisplay
                 )
+                prevAnswer = ""
             }
             else
             {
@@ -195,7 +196,22 @@ class MainActivity : ComponentActivity() {
 
         // delete last item
         buttonClear.setOnClickListener {
-            // TODO: delete last item on screen
+            if (firstNumber != "" && secondNumber == "" && operation == "") {
+                firstNumber = firstNumber?.dropLast(1)
+                if (firstNumber == "")
+                    result.setText("0")
+                else
+                    result.setText(firstNumber)
+            }
+            else if (secondNumber == "" && operation != "")
+            {
+                operation = ""
+                result.setText(firstNumber)
+            } else if (secondNumber != "") {
+                secondNumber = secondNumber?.dropLast(1)
+                val remainingNumbers = "$firstNumber $operation"
+                result.setText(remainingNumbers)
+            }
         }
     }
 
@@ -223,6 +239,7 @@ class MainActivity : ComponentActivity() {
             result.setText(newNum)
             secondNumber = ""
             firstNumber = ""
+            operation = ""
             prevAnswer = newNum
 
         } else if (value1.toIntOrNull() != null && value2.toIntOrNull() != null) {
